@@ -12,6 +12,12 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.List;
 
 
+@Controller
+@RequestMapping("/")
 public class BlogController {
 
+    @GetMapping("")
+    public ModelAndView blog() {
+        return new ModelAndView("index");
+    }
 }

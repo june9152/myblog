@@ -1,12 +1,12 @@
 package com.sprata.myblog.dto;
 
+import com.sprata.myblog.entity.Post;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-@AllArgsConstructor
 public class PostResponseDto {
     // 제목
     private String title;
@@ -19,4 +19,11 @@ public class PostResponseDto {
     // 작성자
     private String writeDate;
 
+    public PostResponseDto(Post post) {
+        this.title = post.getTitle();
+        this.content = post.getContent();
+        this.password = post.getPassword();
+        this.writer = post.getWriter();
+        this.writeDate = post.getWriter();
+    }
 }

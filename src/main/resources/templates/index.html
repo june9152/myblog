@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <title>나만의 블로그</title>
     <link rel="stylesheet" href="new-style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
-<body>
+<body onload="onload()">
 <header>
     <div>
         <h1>나만의 블로그</h1>
@@ -24,8 +25,11 @@
         <nav>
             <div>
                 <ul>
-                    <li><a id="login" href="/api/user/login">로그인</a></li>
+                    <li><a id="login" href=/api/user/login>로그인</a></li>
                     <li><a id="signup" href="/api/user/signup">회원가입</a></li>
+
+                    <li><a id="username"></a></li>
+                    <li><a id="logout" href="/api/user/logout">로그아웃</a></li>
                 </ul>
             </div>
         </nav>
@@ -45,5 +49,35 @@
     <li><a href="#">연락처</a></li>
     <p>저작권 © 2023 나만의 블로그. All rights reserved.</p>
 </footer>
-</body>
+</body >
+<script>
+
+function onload(){
+    $.ajax({
+        type: "GET",
+        url: `/api/user/loginGet`,
+        contentType: "application/json",
+        success: function (response, status, xhr) {
+            if(response === 'success') {
+                    document.getElementById("login").style.display='none';
+                    document.getElementById("signup").style.display='none';
+
+                    document.getElementById("logout").style.display='block';
+                    document.getElementById("username").style.display='block';
+            } else {
+                    document.getElementById("login").style.display='block';
+                    document.getElementById("signup").style.display='block';
+
+                    document.getElementById("logout").style.display='none';
+                    document.getElementById("username").style.display='none';
+            }
+        }
+    })
+}
+LoginGet();
+
+
+
+</script>
+<script src="basic.js"></script>
 </html>

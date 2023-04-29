@@ -34,13 +34,17 @@ public class Post {
     private String  writer;
     @Column(nullable = false)
     private Long delete;
-    public Post(PostRequestDto requestDto) {
+    @Column(nullable = false)
+    private Long userId;
+    public Post(PostRequestDto requestDto,Long userId) {
         this.title = requestDto.getTitle();
         this.content = requestDto.getContent();
         this.password = requestDto.getPassword();
         this.firstdate = requestDto.getWriteDate();
+
 //        this.lastdate = lastdate;
         this.writer = requestDto.getWriter();
+        this.userId = userId;
 //        this.delete = requestDto.
     }
 

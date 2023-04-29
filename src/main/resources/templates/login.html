@@ -61,8 +61,11 @@
             success: function (response, status, xhr) {
                 if(response === 'success') {
                     let host = window.location.host;
-                    let url = host + '/api/shop';
-
+                    // let url = host + '/api/blog';
+                    /*위와 아래의 차이점은 무엇인지 궁금합니다.
+                    * '/api/blog' css가 적용 안되는 이유?
+                    * */
+                    let url = host + '/';
                     document.cookie =
                         'Authorization' + '=' + xhr.getResponseHeader('Authorization') + ';path=/';
                     window.location.href = 'http://' + url;
