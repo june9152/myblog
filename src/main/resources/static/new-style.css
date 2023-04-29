@@ -1,0 +1,107 @@
+/* 전체 페이지 스타일 */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* 헤더 스타일 */
+header {
+    background-color: #333;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+}
+
+/* 로고 스타일 */
+header h1 {
+    margin: 0;
+}
+
+/* 내비게이션 스타일 */
+nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+}
+
+nav ul li {
+    margin: 0 1rem;
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+}
+
+nav ul li#post_writer a {
+    background-color: #4CAF50;
+    padding: 8px 16px;
+    border-radius: 8px;
+    color: #fff;
+    font-weight: bold;
+}
+
+/* 메인 스타일 */
+main {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+article {
+    margin-bottom: 2rem;
+}
+
+article h2 {
+    margin-top: 0;
+}
+
+article p {
+    font-size: 1.1rem;
+    line-height: 1.5;
+}
+
+/* 푸터 스타일 */
+footer {
+    background-color: #eee;
+    padding: 1rem;
+    text-align: center;
+}
+
+/* 글 작성하기 스타일 */
+form {
+    max-width: 600px;
+    margin: 2rem auto;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+input[type="text"],
+select,
+textarea {
+    width: 100%;
+    padding: 0.5rem;
+    font-size: 1.1rem;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    margin-bottom: 1rem;
+}
+
+input[type="submit"] {
+    background-color: #4CAF50;
+    border: none;
+    color: #fff;
+    font-size: 1.1rem;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+}
