@@ -1,6 +1,7 @@
 package com.sprata.myblog.dto;
 
 import com.sprata.myblog.entity.Post;
+import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,22 +9,22 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class PostResponseDto {
-    // 제목
     private String title;
-    // 게시글
     private String content;
-    // 게시글
     private String password;
-    // 작성자
-    private String writer;
-    // 작성자
-    private String writeDate;
+    private String firstdate;
+    private String lastdate;
+    private String  writer;
+    private Long delete;
 
     public PostResponseDto(Post post) {
         this.title = post.getTitle();
         this.content = post.getContent();
         this.password = post.getPassword();
         this.writer = post.getWriter();
-        this.writeDate = post.getWriter();
+        this.firstdate = post.getFirstdate();
+        this.lastdate = post.getLastdate();
+        this.delete = post.getDelete();
+
     }
 }

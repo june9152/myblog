@@ -17,18 +17,18 @@ import org.springframework.web.servlet.ModelAndView;
 public class UserController {
     private final UserService userService;
     // 게시물 조회하기
-    @GetMapping("/writer")
-    public ModelAndView writerPage(HttpServletRequest request) {
-        return new ModelAndView("writer");
-    }
-    @GetMapping("/login")
-    public ModelAndView loginPage(HttpServletRequest request) {
-        return new ModelAndView("login");
-    }
-    @GetMapping("/signup")
-    public ModelAndView signupPage(HttpServletRequest request) {
-        return new ModelAndView("signup");
-    }
+//    @GetMapping("/writer")
+//    public ModelAndView writerPage(HttpServletRequest request) {
+//        return new ModelAndView("writer");
+//    }
+//    @GetMapping("/login")
+//    public ModelAndView loginPage(HttpServletRequest request) {
+//        return new ModelAndView("login");
+//    }
+//    @GetMapping("/signup")
+//    public ModelAndView signupPage(HttpServletRequest request) {
+//        return new ModelAndView("signup");
+//    }
 
 //    @PostMapping("/signup")
 //    public String signup(SignupRequestDto signupRequestDto) {
@@ -36,9 +36,9 @@ public class UserController {
 //        userService.signup(signupRequestDto);
 //        return "redirect:/api/user/login";
 //    }
-
+    @ResponseBody
     @PostMapping("/signup")
-    public BlogResponseDto signup(SignupRequestDto signupRequestDto) {
+    public BlogResponseDto signup(@RequestBody  SignupRequestDto signupRequestDto) {
         BlogResponseDto ret =userService.signup(signupRequestDto);
         return ret;
     }

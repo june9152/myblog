@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class PostRequestDto {
-
+    private String id;
     // 제목
     private String title;
     // 게시글
@@ -15,6 +15,10 @@ public class PostRequestDto {
     private String password;
     // 작성자
     private String writer;
-    // 작성자
-    private String writeDate;
+    // 작성일자
+    private String firstdate;
+
+    private String lastdate;
+
+    private Long delete;
 }

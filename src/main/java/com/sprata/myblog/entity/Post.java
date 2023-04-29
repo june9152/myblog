@@ -15,24 +15,24 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.IDENTITY) // ID가 자동으로 생성 및 증가합니다.
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String title;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String content;
 
     @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String firstdate;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String lastdate;
 
     @Column(nullable = false)
     private String  writer;
-    @Column(nullable = false)
+    @Column(nullable = true)
     private Long delete;
     @Column(nullable = false)
     private Long userId;
@@ -40,12 +40,20 @@ public class Post {
         this.title = requestDto.getTitle();
         this.content = requestDto.getContent();
         this.password = requestDto.getPassword();
-        this.firstdate = requestDto.getWriteDate();
+        this.firstdate = requestDto.getFirstdate();
 
 //        this.lastdate = lastdate;
         this.writer = requestDto.getWriter();
         this.userId = userId;
 //        this.delete = requestDto.
+    }
+
+    public void Update(PostRequestDto requestDto) {
+
+        this.title = requestDto.getTitle();
+        this.content = requestDto.getContent();
+        this.password = requestDto.getPassword();
+        this.firstdate = requestDto.getFirstdate();
     }
 
 }
