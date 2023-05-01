@@ -1,14 +1,12 @@
 package com.sprata.myblog.service;
 
-
-
-import com.sprata.myblog.dto.PostRequestDto;
-import com.sprata.myblog.dto.PostResponseDto;
-import com.sprata.myblog.entity.Post;
+import com.sprata.myblog.dto.CommentRequestDto;
+import com.sprata.myblog.dto.CommentResponseDto;
+import com.sprata.myblog.entity.Comment;
 import com.sprata.myblog.entity.User;
 import com.sprata.myblog.entity.UserRoleEnum;
 import com.sprata.myblog.jwt.JwtUtil;
-import com.sprata.myblog.repository.PostRepository;
+import com.sprata.myblog.repository.CommentRepository;
 import com.sprata.myblog.repository.UserRepository;
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.http.HttpServletRequest;
@@ -21,15 +19,15 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class PostService {
+public class CommentService {
 
-//
-    private final PostRepository postRepository;
+    //
+    private final CommentRepository CommentRepository;
     private final UserRepository userRepository;
     private final JwtUtil jwtUtil;
 
     @Transactional
-    public PostResponseDto createPost(PostRequestDto requestDto, HttpServletRequest request) {
+    public CommentResponseDto createComment(Long postId,CommentRequestDto requestDto, HttpServletRequest request) {
         // Request에서 Token 가져오기
         String token = jwtUtil.resolveToken(request);
         Claims claims;
@@ -49,15 +47,15 @@ public class PostService {
             );
 
             // 요청받은 DTO 로 DB에 저장할 객체 만들기
-            Post post = postRepository.saveAndFlush(new Post(requestDto,user.getId()));
+            Comment comment = CommentRepository.saveAndFlush(new Comment(requestDto,user.getId(),postId));
 
-            return new PostResponseDto(post);
+            return new CommentResponseDto(comment);
         } else {
             return null;
         }
     }
     @Transactional(readOnly = true)
-    public List<PostResponseDto> getPost(HttpServletRequest request) {
+    public List<CommentResponseDto> getComment(HttpServletRequest request) {
         // Request에서 Token 가져오기
         String token = jwtUtil.resolveToken(request);
         Claims claims;
@@ -81,18 +79,18 @@ public class PostService {
             UserRoleEnum userRoleEnum = user.getRole();
             System.out.println("role = " + userRoleEnum);
 
-            List<PostResponseDto> list = new ArrayList<>();
-            List<Post> postList;
+            List<CommentResponseDto> list = new ArrayList<>();
+            List<Comment> CommentList;
 
             if (userRoleEnum == UserRoleEnum.USER) {
                 // 사용자 권한이 USER일 경우
-                postList = postRepository.findAllByUserId(user.getId());
+                CommentList = CommentRepository.findAllByUserId(user.getId());
             } else {
-                postList = postRepository.findAll();
+                CommentList = CommentRepository.findAll();
             }
 
-            for (Post product : postList) {
-                list.add(new PostResponseDto(product));
+            for (Comment product : CommentList) {
+                list.add(new CommentResponseDto(product));
             }
 
             return list;
@@ -103,39 +101,7 @@ public class PostService {
     }
 
     @Transactional
-    public PostResponseDto updatePost(Long id,PostRequestDto requestDto, HttpServletRequest request) {
-        // Request에서 Token 가져오기
-        String token = jwtUtil.resolveToken(request);
-        Claims claims;
-
-        // 토큰이 있는 경우에만 관심상품 추가 가능
-        if (token != null) {
-            if (jwtUtil.validateToken(token)) {
-                // 토큰에서 사용자 정보 가져오기
-                claims = jwtUtil.getUserInfoFromToken(token);
-            } else {
-                throw new IllegalArgumentException("Token Error");
-            }
-
-            // 토큰에서 가져온 사용자 정보를 사용하여 DB 조회
-            User user = userRepository.findByUsername(claims.getSubject()).orElseThrow(
-                    () -> new IllegalArgumentException("사용자가 존재하지 않습니다.")
-            );
-
-            // 요청받은 DTO 로 DB에 저장할 객체 만들기
-            /*
-            * 영속성 컨텍스트으로 인한 자동 변환...
-            * */
-            Post post = postRepository.findById(id).orElseGet(Post::new);
-//            if(requestDto.get() != post.getUserId() )
-            post.Update(requestDto);
-            return new PostResponseDto(post);
-        } else {
-            return null;
-        }
-    }
-    @Transactional
-    public PostResponseDto deletePost(Long id,PostRequestDto requestDto, HttpServletRequest request) {
+    public CommentResponseDto updateComment(Long id,CommentRequestDto requestDto, HttpServletRequest request) {
         // Request에서 Token 가져오기
         String token = jwtUtil.resolveToken(request);
         Claims claims;
@@ -157,9 +123,39 @@ public class PostService {
             /*
              * 영속성 컨텍스트으로 인한 자동 변환...
              * */
-            Post post = postRepository.findById(id).orElseGet(Post::new);
-            postRepository.delete(post);
-            return new PostResponseDto(post);
+            Comment Comment = CommentRepository.findById(id).orElseGet(Comment::new);
+            Comment.Update(requestDto);
+            return new CommentResponseDto(Comment);
+        } else {
+            return null;
+        }
+    }
+    @Transactional
+    public CommentResponseDto deleteComment(Long id,CommentRequestDto requestDto, HttpServletRequest request) {
+        // Request에서 Token 가져오기
+        String token = jwtUtil.resolveToken(request);
+        Claims claims;
+        // 토큰이 있는 경우에만 관심상품 추가 가능
+        if (token != null) {
+            if (jwtUtil.validateToken(token)) {
+                // 토큰에서 사용자 정보 가져오기
+                claims = jwtUtil.getUserInfoFromToken(token);
+            } else {
+                throw new IllegalArgumentException("Token Error");
+            }
+
+            // 토큰에서 가져온 사용자 정보를 사용하여 DB 조회
+            User user = userRepository.findByUsername(claims.getSubject()).orElseThrow(
+                    () -> new IllegalArgumentException("사용자가 존재하지 않습니다.")
+            );
+
+            // 요청받은 DTO 로 DB에 저장할 객체 만들기
+            /*
+             * 영속성 컨텍스트으로 인한 자동 변환...
+             * */
+            Comment Comment = CommentRepository.findById(id).orElseGet(Comment::new);
+            CommentRepository.delete(Comment);
+            return new CommentResponseDto(Comment);
         } else {
             return null;
         }

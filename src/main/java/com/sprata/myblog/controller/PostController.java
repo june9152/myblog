@@ -15,14 +15,14 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PostController {
 
-    private final PostService productService;
+    private final PostService postService;
 
     // 관심 상품 등록하기
     @ResponseBody
     @PostMapping("/posts")
     public PostResponseDto createPost(@RequestBody PostRequestDto requestDto, HttpServletRequest request) {
         // 응답 보내기
-        PostResponseDto ret = productService.createPost(requestDto, request);
+        PostResponseDto ret = postService.createPost(requestDto, request);
         return ret;
     }
 
@@ -30,7 +30,7 @@ public class PostController {
     @GetMapping("/posts")
     public List<PostResponseDto> getPosts(HttpServletRequest request) {
         // 응답 보내기
-        return productService.getPost(request);
+        return postService.getPost(request);
     }
 
     // 관심 상품 최저가 등록하기
@@ -38,13 +38,13 @@ public class PostController {
     public PostResponseDto updateProduct(@PathVariable Long id, @RequestBody PostRequestDto requestDto, HttpServletRequest request) {
         // 응답 보내기 (업데이트된 상품 id)
 
-        return productService.updatePost(id,requestDto, request);
+        return postService.updatePost(id,requestDto, request);
     }
     @DeleteMapping("/postsdelete/{id}")
     public PostResponseDto deleteProduct(@PathVariable Long id, @RequestBody PostRequestDto requestDto, HttpServletRequest request) {
         // 응답 보내기 (업데이트된 상품 id)
 
-        return productService.deletePost(id,requestDto, request);
+        return postService.deletePost(id,requestDto, request);
     }
 
 
