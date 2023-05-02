@@ -29,51 +29,51 @@ public class PostService {
     private final JwtUtil jwtUtil;
 
     @Transactional
-    public PostResponseDto createPost(PostRequestDto requestDto, HttpServletRequest request) {
+    public PostResponseDto createPost(PostRequestDto requestDto, User user) {
         // Request에서 Token 가져오기
-        String token = jwtUtil.resolveToken(request);
-        Claims claims;
+//        String token = jwtUtil.resolveToken(user.g);
+//        Claims claims;
 
         // 토큰이 있는 경우에만 관심상품 추가 가능
-        if (token != null) {
-            if (jwtUtil.validateToken(token)) {
-                // 토큰에서 사용자 정보 가져오기
-                claims = jwtUtil.getUserInfoFromToken(token);
-            } else {
-                throw new IllegalArgumentException("Token Error");
-            }
-
-            // 토큰에서 가져온 사용자 정보를 사용하여 DB 조회
-            User user = userRepository.findByUsername(claims.getSubject()).orElseThrow(
+//        if (token != null) {
+//            if (jwtUtil.validateToken(token)) {
+//                // 토큰에서 사용자 정보 가져오기
+//                claims = jwtUtil.getUserInfoFromToken(token);
+//            } else {
+//                throw new IllegalArgumentException("Token Error");
+//            }
+//
+////            // 토큰에서 가져온 사용자 정보를 사용하여 DB 조회
+            userRepository.findByUsername(user.getUsername()).orElseThrow(
                     () -> new IllegalArgumentException("사용자가 존재하지 않습니다.")
             );
 
-            // 요청받은 DTO 로 DB에 저장할 객체 만들기
+//            // 요청받은 DTO 로 DB에 저장할 객체 만들기
             Post post = postRepository.saveAndFlush(new Post(requestDto,user.getId()));
-
+//
             return new PostResponseDto(post);
-        } else {
-            return null;
-        }
+//        } else {
+//            return null;
+//        }
     }
     @Transactional(readOnly = true)
-    public List<PostResponseDto> getPost(HttpServletRequest request) {
+    public List<PostResponseDto> getPost( User user) {
         // Request에서 Token 가져오기
-        String token = jwtUtil.resolveToken(request);
-        Claims claims;
+//        String token = jwtUtil.resolveToken(request);
+//        Claims claims;
 
         // 토큰이 있는 경우에만 관심상품 조회 가능
-        if (token != null) {
-            // Token 검증
-            if (jwtUtil.validateToken(token)) {
-                // 토큰에서 사용자 정보 가져오기
-                claims = jwtUtil.getUserInfoFromToken(token);
-            } else {
-                throw new IllegalArgumentException("Token Error");
-            }
+//        if (token != null) {
+//            // Token 검증
+//            if (jwtUtil.validateToken(token)) {
+//                // 토큰에서 사용자 정보 가져오기
+//                claims = jwtUtil.getUserInfoFromToken(token);
+//            } else {
+//                throw new IllegalArgumentException("Token Error");
+//            }
 
             // 토큰에서 가져온 사용자 정보를 사용하여 DB 조회
-            User user = userRepository.findByUsername(claims.getSubject()).orElseThrow(
+            userRepository.findByUsername(user.getUsername()).orElseThrow(
                     () -> new IllegalArgumentException("사용자가 존재하지 않습니다.")
             );
 
@@ -97,28 +97,29 @@ public class PostService {
 
             return list;
 
-        } else {
-            return null;
-        }
+//        }
+//        else {
+//            return null;
+//        }
     }
 
     @Transactional
-    public PostResponseDto updatePost(Long id,PostRequestDto requestDto, HttpServletRequest request) {
+    public PostResponseDto updatePost(Long id,PostRequestDto requestDto,  User user) {
         // Request에서 Token 가져오기
-        String token = jwtUtil.resolveToken(request);
-        Claims claims;
-
-        // 토큰이 있는 경우에만 관심상품 추가 가능
-        if (token != null) {
-            if (jwtUtil.validateToken(token)) {
-                // 토큰에서 사용자 정보 가져오기
-                claims = jwtUtil.getUserInfoFromToken(token);
-            } else {
-                throw new IllegalArgumentException("Token Error");
-            }
+//        String token = jwtUtil.resolveToken(request);
+//        Claims claims;
+//
+//        // 토큰이 있는 경우에만 관심상품 추가 가능
+//        if (token != null) {
+//            if (jwtUtil.validateToken(token)) {
+//                // 토큰에서 사용자 정보 가져오기
+//                claims = jwtUtil.getUserInfoFromToken(token);
+//            } else {
+//                throw new IllegalArgumentException("Token Error");
+//            }
 
             // 토큰에서 가져온 사용자 정보를 사용하여 DB 조회
-            User user = userRepository.findByUsername(claims.getSubject()).orElseThrow(
+            userRepository.findByUsername(user.getUsername()).orElseThrow(
                     () -> new IllegalArgumentException("사용자가 존재하지 않습니다.")
             );
 
@@ -130,26 +131,26 @@ public class PostService {
 //            if(requestDto.get() != post.getUserId() )
             post.Update(requestDto);
             return new PostResponseDto(post);
-        } else {
-            return null;
-        }
+//        } else {
+//            return null;
+//        }
     }
     @Transactional
-    public PostResponseDto deletePost(Long id,PostRequestDto requestDto, HttpServletRequest request) {
+    public PostResponseDto deletePost(Long id,PostRequestDto requestDto, User user) {
         // Request에서 Token 가져오기
-        String token = jwtUtil.resolveToken(request);
-        Claims claims;
-        // 토큰이 있는 경우에만 관심상품 추가 가능
-        if (token != null) {
-            if (jwtUtil.validateToken(token)) {
-                // 토큰에서 사용자 정보 가져오기
-                claims = jwtUtil.getUserInfoFromToken(token);
-            } else {
-                throw new IllegalArgumentException("Token Error");
-            }
+//        String token = jwtUtil.resolveToken(request);
+//        Claims claims;
+//        // 토큰이 있는 경우에만 관심상품 추가 가능
+//        if (token != null) {
+//            if (jwtUtil.validateToken(token)) {
+//                // 토큰에서 사용자 정보 가져오기
+//                claims = jwtUtil.getUserInfoFromToken(token);
+//            } else {
+//                throw new IllegalArgumentException("Token Error");
+//            }
 
             // 토큰에서 가져온 사용자 정보를 사용하여 DB 조회
-            User user = userRepository.findByUsername(claims.getSubject()).orElseThrow(
+            userRepository.findByUsername(user.getUsername()).orElseThrow(
                     () -> new IllegalArgumentException("사용자가 존재하지 않습니다.")
             );
 
@@ -160,8 +161,9 @@ public class PostService {
             Post post = postRepository.findById(id).orElseGet(Post::new);
             postRepository.delete(post);
             return new PostResponseDto(post);
-        } else {
-            return null;
-        }
+//        }
+//        else {
+//            return null;
+//        }
     }
 }
