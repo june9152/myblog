@@ -49,6 +49,13 @@ public class PostController {
 
         return postService.deletePost(id,requestDto,  userDetails.getUser());
     }
+    @ResponseBody
+    @PostMapping("/postlike/{id}")
+    public PostResponseDto PostLike(@PathVariable Long id,@RequestBody PostRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        // 응답 보내기
+        PostResponseDto ret = postService.PostLikeToggle(id,requestDto, userDetails.getUser());
+        return ret;
+    }
 
 
 }

@@ -17,7 +17,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -55,6 +57,26 @@ public class PostService {
 //        } else {
 //            return null;
 //        }
+    }
+    @Transactional
+    public PostResponseDto PostLikeToggle(Long id,PostRequestDto requestDto, User user) {
+
+        userRepository.findByUsername(user.getUsername()).orElseThrow(
+                () -> new IllegalArgumentException("사용자가 존재하지 않습니다.")
+        );
+        Post post = postRepository.findById(id).orElseGet(Post::new);
+
+//            if(requestDto.get() != post.getUserId() )
+        Set<Long> userIdSet = new HashSet<>(post.getLikeUserId());
+        userIdSet.add(user.getId()); // 중복 확인 set
+        post.LikeAdd(requestDto,user.getId()); // 실제데이터베이스
+        post.setLikeUserId(post.getLikeUserId());
+        if(userIdSet.size() != post.getLikeUserId().size()){
+            post.LikeRemove(user.getId());
+            post.LikeRemove(user.getId());
+        }
+//        post.LikeToggle(user.getId());
+        return new PostResponseDto(post);
     }
     @Transactional(readOnly = true)
     public List<PostResponseDto> getPost( User user) {

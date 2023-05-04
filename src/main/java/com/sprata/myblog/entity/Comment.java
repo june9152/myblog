@@ -36,6 +36,9 @@ public class Comment {
     private Long postId;
     @Column(nullable = false)
     private Long userId;
+    @Column(nullable = true)
+    @ElementCollection
+    private List<Long> likeUserId;
     public Comment(CommentRequestDto requestDto, Long userId,Long postId) {
         this.content = requestDto.getContent();
         this.firstdate = requestDto.getFirstdate();
@@ -50,5 +53,11 @@ public class Comment {
 
         this.content = requestDto.getContent();
         this.firstdate = requestDto.getFirstdate();
+    }
+    public void LikeAdd(CommentRequestDto requestDto,Long userId) {
+        this.likeUserId.add(userId);
+    }
+    public void LikeRemove(Long userId) {
+        this.likeUserId.remove(userId);
     }
 }

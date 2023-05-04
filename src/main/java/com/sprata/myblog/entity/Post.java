@@ -6,7 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -35,6 +37,9 @@ public class Post {
     @Column(nullable = false)
     private String  writer;
 
+    @Column(nullable = true)
+    @ElementCollection
+    private List<Long> likeUserId;
 
     @Column(nullable = true)
     private Long delete;
@@ -45,11 +50,9 @@ public class Post {
         this.content = requestDto.getContent();
         this.password = requestDto.getPassword();
         this.firstdate = requestDto.getFirstdate();
-
-//        this.lastdate = lastdate;
         this.writer = requestDto.getWriter();
         this.userId = userId;
-//        this.delete = requestDto.
+
     }
 
     public void Update(PostRequestDto requestDto) {
@@ -58,6 +61,12 @@ public class Post {
         this.content = requestDto.getContent();
         this.password = requestDto.getPassword();
         this.firstdate = requestDto.getFirstdate();
+    }
+    public void LikeAdd(PostRequestDto requestDto,Long userId) {
+       this.likeUserId.add(userId);
+    }
+    public void LikeRemove(Long userId) {
+        this.likeUserId.remove(userId);
     }
 
 }

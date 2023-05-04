@@ -3,10 +3,13 @@ package com.sprata.myblog.dto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Getter
 @NoArgsConstructor
 public class PostRequestDto {
-    private String id;
+    private Long id;
     // 제목
     private String title;
     // 게시글
@@ -19,6 +22,8 @@ public class PostRequestDto {
     private String firstdate;
 
     private String lastdate;
+
+    private ArrayList<Long> likeUserId;
 
     private Long delete;
 }
